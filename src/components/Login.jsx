@@ -114,14 +114,6 @@ const Login = () => {
             >
               {loading ? 'Please wait...' : 'Sign In'}
             </button>
-            <button 
-              disabled={loading} 
-              type="button"
-              onClick={() => login('Guest').then(() => navigate('/'))}
-              style={{ padding: '12px', background: 'transparent', border: '1px solid var(--border-light)', borderRadius: '12px', fontSize: '15px', fontWeight: '700', cursor: 'pointer', color: 'var(--text-secondary)' }}
-            >
-              Continue as Guest
-            </button>
           </div>
         </form>
 

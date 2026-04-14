@@ -62,6 +62,11 @@ export function AuthProvider({ children }) {
   }, []);
 
   function login(userId, password = '') {
+    // Restriction: Only TrangSamFS is allowed
+    if (userId.toLowerCase() !== 'trangsamfs') {
+      return Promise.reject(new Error('Access Denied. Only TrangSamFS is authorized to access this software at this time.'));
+    }
+
     const targetUserId = userId === 'Guest' ? 'Guest' : userId;
     const user = EMPLOYEES.find(e => e.id.toLowerCase() === targetUserId.toLowerCase());
     
