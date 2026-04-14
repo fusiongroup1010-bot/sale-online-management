@@ -6,6 +6,8 @@ export const EMPLOYEES = [
   // CEO - Access & Edit All
   { id: 'CEOFS', name: 'CEO', role: 'admin', pass: 'CEOChoFS', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi', 'hcm', 'hungyen'], canSendNotify: true, notifyScope: 'all', title: 'CEO' },
   { id: 'TrangSamFS', name: 'Trang Sam', role: 'admin', pass: 'fusion2026', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi', 'hcm', 'hungyen'], canSendNotify: true, notifyScope: 'all', title: 'CEO' },
+  { id: 'LeLienFS', name: 'Le Lien', role: 'admin', pass: 'fusion2026', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi', 'hcm', 'hungyen'], canSendNotify: true, notifyScope: 'all', title: 'CEO' },
+  { id: 'ThanhTraFS', name: 'Thanh Tra', role: 'admin', pass: 'fusion2026', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi', 'hcm', 'hungyen'], canSendNotify: true, notifyScope: 'all', title: 'CEO' },
   
   // Hanoi Authorized Staff - View All, Edit Hanoi
   { id: 'DMHuong', name: 'Huong', role: 'admin', pass: 'DMHFS123', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi'], canSendNotify: true, notifyScope: 'restricted', title: 'Branch Manager' },
@@ -62,9 +64,10 @@ export function AuthProvider({ children }) {
   }, []);
 
   function login(userId, password = '') {
-    // Restriction: Only TrangSamFS is allowed
-    if (userId.toLowerCase() !== 'trangsamfs') {
-      return Promise.reject(new Error('Access Denied. Only TrangSamFS is authorized to access this software at this time.'));
+    // Restriction: Only authorized IDs are allowed
+    const authorized = ['trangsamfs', 'lelienfs', 'thanhtrafs'];
+    if (!authorized.includes(userId.toLowerCase())) {
+      return Promise.reject(new Error('Access Denied. Only authorized staff are authorized to access this software at this time.'));
     }
 
     const targetUserId = userId === 'Guest' ? 'Guest' : userId;
