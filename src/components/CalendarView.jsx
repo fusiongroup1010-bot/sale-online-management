@@ -137,23 +137,35 @@ const EventCard = ({ event, topPos, height, leftPos, width, onEdit, onDelete, on
           </div>
         )}
       </div>
-      {/* Time & Dates */}
+      {/* Time */}
       <div style={{ fontSize: '9px', fontWeight: '700', marginTop: '2px', opacity: 0.9 }}>
         {fmt(event.start)} – {fmt(event.start + event.duration)}
+      </div>
+
+      {/* Bottom info (Right-aligned) */}
+      <div style={{ 
+        position: 'absolute', 
+        bottom: '6px', 
+        right: '8px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'flex-end', 
+        gap: '2px', 
+        zIndex: 2,
+        pointerEvents: 'none' 
+      }}>
         {event.spanDays > 1 && (
-          <div style={{ marginTop: '2px', opacity: 0.8 }}>
+          <div style={{ fontSize: '9px', fontWeight: '800', opacity: 0.8, textTransform: 'none' }}>
             Multiple days: {event.spanDays} days
           </div>
         )}
-      </div>
-
-      {/* Focus Status Badge & Tracker */}
-      <div style={{ position: 'absolute', bottom: '4px', right: '4px', display: 'flex', alignItems: 'center', gap: '4px', zIndex: 2 }}>
-        {event.status === 'in-progress' && event.updatedBy && (
-          <div style={{ fontSize: '9px', fontWeight: '700', color: 'inherit', opacity: 0.8, whiteSpace: 'nowrap', maxWidth: '60px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {event.updatedBy}
+        
+        {event.updatedBy && (
+          <div style={{ fontSize: '9px', fontWeight: '800', opacity: 0.9, whiteSpace: 'nowrap' }}>
+            By <strong>{event.updatedBy}</strong>
           </div>
         )}
+
         {(() => {
           let text = '';
           let bgColor = '';
@@ -181,29 +193,14 @@ const EventCard = ({ event, topPos, height, leftPos, width, onEdit, onDelete, on
               padding: '1px 6px',
               borderRadius: '4px',
               whiteSpace: 'nowrap',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              marginTop: '2px'
             }}>
               {text}
             </div>
           );
         })()}
       </div>
-
-      {/* Tracking info normally */}
-      {event.updatedBy && event.status !== 'in-progress' && (
-        <div style={{ 
-          marginTop: '4px', 
-          paddingTop: '4px', 
-          borderTop: '1px solid rgba(0,0,0,0.06)', 
-          fontSize: '8px', 
-          fontWeight: '600',
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis'
-        }}>
-          By <strong>{event.updatedBy}</strong>
-        </div>
-      )}
     </div>
   );
 };
