@@ -1,37 +1,11 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-/* ── Location-based Departments ── */
+/* ── Combined Departments (Location-based categories) ── */
 export const DEPARTMENTS = {
-  hanoi: [
-    { id: 'hn-bm', name: 'Branch Manager', color: '#dbeafe', text: '#1e40af', accent: '#3b82f6' },
-    { id: 'hn-soff', name: 'Sale Offline', color: '#ffedd5', text: '#9a3412', accent: '#f97316' },
-    { id: 'hn-sadmin', name: 'Sale Admin', color: '#fef9c3', text: '#854d0e', accent: '#eab308' },
-    { id: 'hn-acc', name: 'Accountant', color: '#dcfce7', text: '#166534', accent: '#22c55e' },
-    { id: 'hn-sonl', name: 'Sale Online', color: '#fce7f3', text: '#9d174d', accent: '#ec4899' },
-    { id: 'hn-mkt', name: 'MKT', color: '#e0f2fe', text: '#075985', accent: '#0ea5e9' },
-    { id: 'hn-pur', name: 'Purchasing', color: '#ede9fe', text: '#5b21b6', accent: '#8b5cf6' },
-    { id: 'hn-hr', name: 'HR', color: '#fae8ff', text: '#86198f', accent: '#d946ef' },
-    { id: 'hn-log', name: 'Logistics', color: '#f1f5f9', text: '#334155', accent: '#64748b' },
-  ],
-  hcm: [
-    { id: 'hcm-bm', name: 'Branch Manager', color: '#dbeafe', text: '#1e40af', accent: '#3b82f6' },
-    { id: 'hcm-soff', name: 'Sale Offline', color: '#ffedd5', text: '#9a3412', accent: '#f97316' },
-    { id: 'hcm-log', name: 'Logistics', color: '#f1f5f9', text: '#334155', accent: '#64748b' },
-    { id: 'hcm-sonl', name: 'Sale Online', color: '#fce7f3', text: '#9d174d', accent: '#ec4899' },
-    { id: 'hcm-hr', name: 'HR', color: '#fae8ff', text: '#86198f', accent: '#d946ef' },
-  ],
-  hungyen: [
-    { id: 'hy-fd', name: 'Factory Director', color: '#dbeafe', text: '#1e40af', accent: '#3b82f6' },
-    { id: 'hy-rd', name: 'R&D', color: '#ede9fe', text: '#5b21b6', accent: '#8b5cf6' },
-    { id: 'hy-cpo', name: 'CPO', color: '#e0f2fe', text: '#075985', accent: '#0ea5e9' },
-    { id: 'hy-hr', name: 'HR', color: '#fae8ff', text: '#86198f', accent: '#d946ef' },
-    { id: 'hy-ac', name: 'Accountant', color: '#fef3c7', text: '#92400e', accent: '#d97706' },
-    { id: 'hy-qc', name: 'QC', color: '#f1f5f9', text: '#334155', accent: '#64748b' },
-    { id: 'hy-ds', name: 'Designer', color: '#fce7f3', text: '#9d174d', accent: '#ec4899' },
-    { id: 'hy-evo', name: 'Evolution', color: '#ecfdf5', text: '#065f46', accent: '#10b981' },
-    { id: 'hy-pm', name: 'Purchasing Material', color: '#ccfbf1', text: '#115e59', accent: '#14b8a6' },
-    { id: 'hy-pp', name: 'Purchasing Production', color: '#ffedd5', text: '#9a3412', accent: '#f97316' },
-    { id: 'hy-log', name: 'Logistics', color: '#e0e7ff', text: '#3730a3', accent: '#6366f1' },
+  all: [
+    { id: 'sonl-hn', name: 'Sale Online HN', color: '#fce7f3', text: '#9d174d', accent: '#ec4899' },
+    { id: 'sonl-hcm', name: 'Sale Online HCM', color: '#dbeafe', text: '#1e40af', accent: '#3b82f6' },
+    { id: 'sonl-hy', name: 'Sale Online HY', color: '#fef9c3', text: '#854d0e', accent: '#eab308' },
   ]
 };
 
@@ -88,21 +62,17 @@ export const EventProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(null);
   const { currentUser } = useAuth();
-  const [activeLocation, setActiveLocation] = useState('hanoi');
+  const [activeLocation, setActiveLocation] = useState('all');
 
-  // Auto-set location based on user permissions on login
+  // Auto-set location based on user permissions on login (Simplified for all-in-one)
   useEffect(() => {
-    if (currentUser && currentUser.allowedLocations) {
-      if (!currentUser.allowedLocations.includes(activeLocation)) {
-        setActiveLocation(currentUser.allowedLocations[0]);
-      }
-    }
+    setActiveLocation('all');
   }, [currentUser]);
 
   // Change full app theme when activeLocation changes
   useEffect(() => {
     const THEME_MAP = {
-      hanoi: {
+      all: {
         bg:             '#eef6ff',
         panelHover:     '#f0f8ff',
         border:         'rgba(59,130,246,0.09)',
@@ -115,34 +85,8 @@ export const EventProvider = ({ children }) => {
         shadowHover:    '0 15px 40px rgba(59,130,246,0.12)',
         bannerBg:       'linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%)',
       },
-      hcm: {
-        bg:             '#fff0f7',
-        panelHover:     '#fff5fa',
-        border:         'rgba(236,72,153,0.09)',
-        accent:         '#ec4899',
-        pastel:         '#fce7f3',
-        pastelHover:    '#fbcfe8',
-        textSecondary:  '#db2777',
-        textPrimary:    '#831843',
-        shadowSoft:     '0 10px 30px rgba(236,72,153,0.05)',
-        shadowHover:    '0 15px 40px rgba(236,72,153,0.12)',
-        bannerBg:       'linear-gradient(135deg, #fff0f7 0%, #fce7f3 100%)',
-      },
-      hungyen: {
-        bg:             '#f5f3ff',
-        panelHover:     '#f9f7ff',
-        border:         'rgba(139,92,246,0.09)',
-        accent:         '#8b5cf6',
-        pastel:         '#ede9fe',
-        pastelHover:    '#ddd6fe',
-        textSecondary:  '#7c3aed',
-        textPrimary:    '#4c1d95',
-        shadowSoft:     '0 10px 30px rgba(139,92,246,0.05)',
-        shadowHover:    '0 15px 40px rgba(139,92,246,0.12)',
-        bannerBg:       'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
-      },
     };
-    const t = THEME_MAP[activeLocation] || THEME_MAP.hanoi;
+    const t = THEME_MAP[activeLocation] || THEME_MAP.all;
     const root = document.documentElement;
     const userBg = localStorage.getItem('bgColor');
     const userTheme = localStorage.getItem('themeColor');
@@ -335,9 +279,9 @@ export const EventProvider = ({ children }) => {
       items,           // raw unified list
       activeLocation,
       setActiveLocation,
-      filteredItems: items.filter(i => i.location === activeLocation),
-      events: items.filter(i => i.location === activeLocation), // For Calendar
-      isEditable: currentUser?.editableLocations?.includes(activeLocation), 
+      filteredItems: items,
+      events: items, // For Calendar
+      isEditable: true, 
       addEvent, updateEvent, deleteEvent, changeStatus,
       isModalOpen, setIsModalOpen,
       currentEvent,

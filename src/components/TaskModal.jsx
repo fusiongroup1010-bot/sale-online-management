@@ -26,8 +26,8 @@ const TaskModal = () => {
   const defaultForm = {
     title: '', 
     type: 'task', 
-    categoryId: 'hn-bm',
-    location: activeLocation || 'hanoi', // Default to current view's location
+    categoryId: 'sonl-hn',
+    location: 'all',
     priority: 'medium', 
     status: 'todo',
     dueDate: new Date().toISOString().split('T')[0],
@@ -43,8 +43,8 @@ const TaskModal = () => {
       setForm({
         title:      currentEvent.title      || '',
         type:       currentEvent.type       || 'task',
-        categoryId: currentEvent.categoryId || 'hn-bm',
-        location:   currentEvent.location   || 'hanoi',
+        categoryId: currentEvent.categoryId || 'sonl-hn',
+        location:   'all',
         priority:   currentEvent.priority   || 'medium',
         status:     currentEvent.status     || 'todo',
         dueDate:    currentEvent.dueDate    || new Date().toISOString().split('T')[0],
@@ -53,29 +53,20 @@ const TaskModal = () => {
         duration:   currentEvent.duration   || 1,
       });
     } else {
-      // Default to activeLocation if editable, else first editable location
-      const defaultLoc = currentUser?.editableLocations?.includes(activeLocation) 
-        ? activeLocation 
-        : (currentUser?.editableLocations?.[0] || 'hanoi');
-      setForm({ ...defaultForm, location: defaultLoc });
+      setForm(defaultForm);
     }
-  }, [currentEvent, isModalOpen, activeLocation, currentUser]);
+  }, [currentEvent, isModalOpen]);
 
   if (!isModalOpen) return null;
 
   const set = (k, v) => {
-    if (k === 'location') {
-      const firstDept = DEPARTMENTS[v][0]?.id;
-      setForm(f => ({ ...f, [k]: v, categoryId: firstDept }));
-    } else {
-      setForm(f => ({ ...f, [k]: v }));
-    }
+    setForm(f => ({ ...f, [k]: v }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.title.trim()) return;
-    const cat = CATEGORY_MAP[form.categoryId] || (DEPARTMENTS[form.location][0]);
+    const cat = CATEGORY_MAP[form.categoryId] || (DEPARTMENTS.all[0]);
     const itemData = {
       ...form,
       duration: parseFloat(form.duration),
@@ -91,7 +82,7 @@ const TaskModal = () => {
     }
   };
 
-  const currentCategories = DEPARTMENTS[form.location] || [];
+  const currentCategories = DEPARTMENTS.all || [];
 
   const TypeIcon = form.type === 'meeting' ? Users : form.type === 'report' ? FileText : Tag;
   const typeColors = {
@@ -106,7 +97,7 @@ const TaskModal = () => {
 
   return (
     <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-      <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '520px' }}>
+      <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '420px' }}>
         <button
           className="btn-icon"
           style={{ position: 'absolute', top: '24px', right: '24px', width: '36px', height: '36px' }}
@@ -148,16 +139,8 @@ const TaskModal = () => {
             />
           </div>
 
-          {/* Location + Type */}
+          {/* Type + Category */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div className="form-group">
-              <label style={labelStyle}><MapPin size={11} style={{ display: 'inline', marginRight: 4 }} />Location</label>
-              <select value={form.location} onChange={e => set('location', e.target.value)} style={selectStyle}>
-                {['hanoi', 'hcm', 'hungyen'].filter(loc => currentUser?.editableLocations?.includes(loc)).map(loc => (
-                  <option key={loc} value={loc}>{loc === 'hanoi' ? 'Hanoi' : loc === 'hcm' ? 'HCM' : 'Hung Yen'}</option>
-                ))}
-              </select>
-            </div>
             <div className="form-group">
               <label style={labelStyle}>Type</label>
               <select value={form.type} onChange={e => set('type', e.target.value)} style={selectStyle}>
@@ -166,12 +149,8 @@ const TaskModal = () => {
                 <option value="report">📊 Report</option>
               </select>
             </div>
-          </div>
-
-          {/* Department + Priority */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <div className="form-group">
-              <label style={labelStyle}>Department</label>
+              <label style={labelStyle}>Calendar Category</label>
               <select value={form.categoryId} onChange={e => set('categoryId', e.target.value)} style={selectStyle}>
                 {currentCategories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>

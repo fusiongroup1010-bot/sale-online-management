@@ -29,69 +29,7 @@ const TopNav = ({ onMenuClick }) => {
       </button>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flex: 1 }}>
-        {/* Location Switcher - 3 compact rectangle cards */}
-        <div style={{ 
-          display: 'flex', 
-          gap: '8px',
-          alignItems: 'center',
-        }}>
-          {['hanoi', 'hcm', 'hungyen'].filter(loc => currentUser?.allowedLocations?.includes(loc)).map((loc) => {
-            const LOCATION_THEME = {
-              hanoi:   { activeBg: '#dbeafe', activeText: '#1e40af', activeBorder: '#93c5fd', icon: '🏙️', label: 'Hà Nội',  shadow: 'rgba(59,130,246,0.18)' },
-              hcm:     { activeBg: '#fce7f3', activeText: '#be185d', activeBorder: '#f9a8d4', icon: '🌆', label: 'HCM',      shadow: 'rgba(236,72,153,0.18)' },
-              hungyen: { activeBg: '#ede9fe', activeText: '#6d28d9', activeBorder: '#c4b5fd', icon: '🏭', label: 'Hưng Yên', shadow: 'rgba(139,92,246,0.18)' },
-            };
-            const theme = LOCATION_THEME[loc];
-            const isActive = activeLocation === loc;
-
-            return (
-              <button
-                key={loc}
-                onClick={() => setActiveLocation(loc)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '7px 16px',
-                  borderRadius: '12px',
-                  fontSize: '12px',
-                  fontWeight: '800',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                  transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                  background: isActive ? theme.activeBg : 'var(--bg-panel)',
-                  color: isActive ? theme.activeText : 'var(--text-muted)',
-                  border: `1.5px solid ${isActive ? theme.activeBorder : 'var(--border-light)'}`,
-                  boxShadow: isActive ? `0 4px 14px ${theme.shadow}` : 'var(--shadow-soft)',
-                  cursor: currentUser?.allowedLocations?.length > 1 ? 'pointer' : 'default',
-                  whiteSpace: 'nowrap',
-                  transform: isActive ? 'translateY(-1px)' : 'none',
-                  minWidth: '90px',
-                  justifyContent: 'center',
-                }}
-              >
-                <span style={{ fontSize: '14px', lineHeight: 1 }}>{theme.icon}</span>
-                <span>{theme.label}</span>
-                {isActive && (
-                  <span style={{
-                    width: '6px', height: '6px', borderRadius: '50%',
-                    background: theme.activeText, marginLeft: '2px', opacity: 0.7,
-                    animation: 'pulse 2s ease-in-out infinite'
-                  }} />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="soft-panel" style={{ display: 'none', alignItems: 'center', padding: '12px 20px', borderRadius: 'var(--radius-full)', width: '340px', gap: '12px', background: 'var(--bg-panel)' }}>
-          <Search size={18} color="var(--text-muted)" />
-          <input 
-            type="text" 
-            placeholder="Quick Search..." 
-            style={{ border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', width: '100%', fontSize: '15px', fontWeight: '500' }}
-          />
-        </div>
+        {/* Location selector removed (Simplified version) */}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -100,7 +38,7 @@ const TopNav = ({ onMenuClick }) => {
            <span>{format(today, 'EEEE, MMM dd', { locale: enUS })}</span>
         </div>
 
-        {currentUser?.role !== 'guest' && currentUser?.editableLocations?.includes(activeLocation) && (
+        {currentUser?.role !== 'guest' && (
           <button 
             className="btn-primary" 
             style={{ display: 'flex', alignItems: 'center', gap: '8px' }}

@@ -34,13 +34,8 @@ const Dashboard = () => {
   const { currentUser } = useAuth();
   const tday = today();
 
-  // Location-aware banner config
-  const LOCATION_BANNER = {
-    hanoi:   { bannerBg: 'linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%)', textColor: '#1e3a8a' },
-    hcm:     { bannerBg: 'linear-gradient(135deg, #fff0f7 0%, #fce7f3 100%)', textColor: '#831843' },
-    hungyen: { bannerBg: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)', textColor: '#4c1d95' },
-  };
-  const locBanner = LOCATION_BANNER[activeLocation] || LOCATION_BANNER.hanoi;
+  // Simplified banner config
+  const locBanner = { bannerBg: 'linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%)', textColor: '#1e3a8a' };
 
   const getGreeting = () => {
     const hour = new Date().getHours();
