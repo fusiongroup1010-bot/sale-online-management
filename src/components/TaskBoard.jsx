@@ -155,16 +155,28 @@ const TaskCard = ({ task, index, onEdit, onDelete, onStatusChange, canEdit }) =>
             )}
           </div>
 
-          {/* Title */}
           <div className="task-title" style={{
             fontSize: '15px', 
             color: task.status === 'done' ? 'var(--text-muted)' : 'var(--text-primary)',
-            marginTop: '10px', marginBottom: '10px',
+            marginTop: '10px', marginBottom: '4px',
             textDecoration: task.status === 'done' ? 'line-through' : 'none',
             textAlign: task.status === 'in-progress' ? 'right' : 'left'
           }}>
             {task.title}
           </div>
+
+          {task.workDescription && (
+            <div style={{
+              fontSize: '12px',
+              fontStyle: 'italic',
+              color: 'var(--text-secondary)',
+              marginBottom: '10px',
+              opacity: 0.8,
+              textAlign: task.status === 'in-progress' ? 'right' : 'left'
+            }}>
+              {task.workDescription}
+            </div>
+          )}
 
           {/* Footer */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

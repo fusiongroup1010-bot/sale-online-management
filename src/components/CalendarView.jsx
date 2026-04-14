@@ -83,6 +83,22 @@ const EventCard = ({ event, topPos, height, leftPos, width, onEdit, onDelete, on
           WebkitBoxOrient: 'vertical'
         }}>
           {TYPE_LABEL[event.type] || ''} {event.title}
+          {event.workDescription && (
+            <div style={{ 
+              fontSize: '10px', 
+              fontStyle: 'italic', 
+              marginTop: '2px', 
+              opacity: 0.85,
+              fontWeight: '500',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical'
+            }}>
+              {event.workDescription}
+            </div>
+          )}
         </div>
         {canEdit && (
           <div style={{ position: 'relative', flexShrink: 0 }}>

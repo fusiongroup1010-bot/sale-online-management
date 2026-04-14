@@ -34,6 +34,7 @@ const TaskModal = () => {
     endDate: new Date().toISOString().split('T')[0],
     dueTime: '09:00', 
     duration: 1,
+    workDescription: '',
   };
 
   const [form, setForm] = useState(defaultForm);
@@ -51,6 +52,7 @@ const TaskModal = () => {
         endDate:    currentEvent.endDate    || currentEvent.dueDate || new Date().toISOString().split('T')[0],
         dueTime:    currentEvent.dueTime    || '',
         duration:   currentEvent.duration   || 1,
+        workDescription: currentEvent.workDescription || '',
       });
     } else {
       setForm(defaultForm);
@@ -135,6 +137,18 @@ const TaskModal = () => {
               placeholder="e.g. Q2 Strategy Meeting"
               value={form.title}
               onChange={e => set('title', e.target.value)}
+              style={inputStyle}
+            />
+          </div>
+
+          {/* Work Description */}
+          <div className="form-group">
+            <label style={labelStyle}>Work Description</label>
+            <input
+              type="text"
+              placeholder="Describe what needs to be done..."
+              value={form.workDescription}
+              onChange={e => set('workDescription', e.target.value)}
               style={inputStyle}
             />
           </div>
