@@ -5,6 +5,7 @@ const AuthContext = createContext();
 export const EMPLOYEES = [
   // CEO - Access & Edit All
   { id: 'CEOFS', name: 'CEO', role: 'admin', pass: 'CEOChoFS', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi', 'hcm', 'hungyen'], canSendNotify: true, notifyScope: 'all', title: 'CEO' },
+  { id: 'TrangSamFS', name: 'Trang Sam', role: 'admin', pass: 'fusion2026', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi', 'hcm', 'hungyen'], canSendNotify: true, notifyScope: 'all', title: 'CEO' },
   
   // Hanoi Authorized Staff - View All, Edit Hanoi
   { id: 'DMHuong', name: 'Huong', role: 'admin', pass: 'DMHFS123', allowedLocations: ['hanoi', 'hcm', 'hungyen'], editableLocations: ['hanoi'], canSendNotify: true, notifyScope: 'restricted', title: 'Branch Manager' },
