@@ -32,7 +32,7 @@ const TaskModal = () => {
     status: 'todo',
     dueDate: new Date().toISOString().split('T')[0],
     endDate: new Date().toISOString().split('T')[0],
-    dueTime: '09:00', 
+    dueTime: '08:00', 
     duration: 1,
     workDescription: '',
   };

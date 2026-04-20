@@ -7,8 +7,8 @@ import 'react-day-picker/dist/style.css';
 import { useEvents, CATEGORY_MAP, DEPARTMENTS } from '../context/EventContext';
 import { useAuth } from '../context/AuthContext';
 
-const START_HOUR = 9;
-const HOURS_COUNT = 9; // 9 AM → 5 PM (17:00)
+const START_HOUR = 8;
+const HOURS_COUNT = 10; // 8 AM → 5 PM (17:00)
 
 const CATEGORY_LIST = Object.entries(CATEGORY_MAP).map(([id, v]) => ({ id, ...v }));
 
